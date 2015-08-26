@@ -95,8 +95,21 @@ class base_runner(object):
 				remember_logfile = False
 		else:
 			# Suggested filename
-			suggested_path = os.path.join(config.get_config( \
-				u'default_logfile_folder'), u'subject-%d.csv' % subject_nr)
+			if os.path.isfile(suggested_path):
+				check = False
+				unique_id = 0
+				while check == False:
+					unique_id += 1
+					suggested_path = os.path.join(config.get_config( \
+					u'default_logfile_folder'), u'subject-%d_%d.csv' % subject_nr, unique_id
+
+					if not os.path.isfile(suggested_path):
+						check = True
+			else:
+				suggested_path = os.path.join(config.get_config( \
+					u'default_logfile_folder'), u'subject-%d.csv' % subject_nr)
+
+
 			# Get the data file
 			csv_filter = u'Comma-separated values (*.csv)'
 			logfile = unicode(QtGui.QFileDialog.getSaveFileName( \
